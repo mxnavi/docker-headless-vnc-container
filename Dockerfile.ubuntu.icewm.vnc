@@ -1,6 +1,6 @@
 # This Dockerfile is used to build an headles vnc image based on Ubuntu
 
-FROM ubuntu:16.04
+FROM docker.mxnavi.com:5000/ubuntu1604
 
 MAINTAINER Tobias Schneck "tobias.schneck@consol.de"
 ENV REFRESHED_AT 2017-02-14
@@ -38,6 +38,11 @@ RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
 ### Install some common tools
 RUN $INST_SCRIPTS/tools.sh
+
+### Install Chinese suport
+RUN $INST_SCRIPTS/chinese-suport.sh
+ADD ./src/ubuntu/fcitx /headless/.config/fcitx
+RUN chmod 0777 -R /headless/.config/fcitx
 
 ### Install xvnc-server & noVNC - HTML5 based VNC viewer
 RUN $INST_SCRIPTS/tigervnc.sh
